@@ -1,0 +1,75 @@
+# Node.js modules
+node_modules/
+npm-debug.log*
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Logs
+logs/
+*.log
+pids/
+*.pid
+*.seed
+*.pid.lock
+logs/
+debug.log
+error.log
+*.gz
+
+# Environment variables
+.env
+.env.*.local
+.env.production
+.env.development
+
+# Build files
+dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# Database files
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+dump.rdb
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.swp
+*.swo
+*.bak
+*.backup
+
+# Mac system files
+.DS_Store
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# IDE
+.idea/
+*.iml
+
+# Test coverage
+.nyc_output/
+coverage/
+
+# AWS credentials or config
+.aws/
+.s3cfg
+
+# Express specific files
+public/uploads/
+public/temp/
+uploads/
+temp/
+
+# Others
+*.log
+*.lock
