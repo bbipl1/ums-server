@@ -1,4 +1,5 @@
 const express = require("express");
+const cors=require("cors");
 const dotenv = require("dotenv");
 dotenv.config();
 const connectDB = require("./src/config/db.config");
@@ -11,9 +12,12 @@ const polygon=require('./src/routes/admin/map/polygon')
 // route import end
 
 // middleware start
+// default middleware start
+app.use(cors());
+// default middleware end
 app.use('/api/v1/admin/map/point',point);
-app.use('/api/v1/admin/map/point',roadLine);
-app.use('/api/v1/admin/map/point',polygon);
+app.use('/api/v1/admin/map/road-line',roadLine);
+app.use('/api/v1/admin/map/polygon',polygon);
 // middleware end
 
 app.get('/', (req, res) => {
