@@ -1,15 +1,25 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
   {
     name: {
-      type: String,
-      required: true,
+      firstName: { type: String, required: true },
+      middleName: { type: String, required: false },
+      lastName: { type: String, required: true },
+    },
+    mobile: {
+      countryCode: { type: String, required: true, unique: false },
+      mobileNumber: { type: String, required: true, unique: false },
     },
     email: {
       type: String,
       required: true,
       unique: true,
+    },
+    gender: {
+      type: String,
+      required: true,
+      unique: false,
     },
     password: {
       type: String,
@@ -17,18 +27,18 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['admin', 'editor', 'viewer', 'tracker'],
-      default: 'viewer',
+      enum: ["admin", "editor", "viewer", "b2b"],
+      default: "viewer",
     },
     location: {
       type: {
         type: String,
-        enum: ['Point'],
-        default: 'Point',
+        enum: ["Point"],
+        default: "Point",
       },
       coordinates: {
         type: [Number],
-        index: '2dsphere', // Enables GeoSpatial Queries
+        index: "2dsphere", // Enables GeoSpatial Queries
       },
     },
     isOnline: {
@@ -42,7 +52,7 @@ const userSchema = new mongoose.Schema(
     maps: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Map',
+        ref: "Map",
       },
     ],
   },
@@ -50,11 +60,11 @@ const userSchema = new mongoose.Schema(
 );
 
 // Middleware to auto-update lastActiveAt when location is updated
-userSchema.pre('save', function (next) {
-  if (this.isModified('location')) {
+userSchema.pre("save", function (next) {
+  if (this.isModified("location")) {
     this.lastActiveAt = Date.now();
   }
   next();
 });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model("User", userSchema);

@@ -7,6 +7,8 @@ try {
         data:roadLines
     }
 
+    console.log("roadlines are",roadLines);
+
     res.status(200).json(dataToSend);
 } catch (error) {
     console.log(error);

@@ -3,30 +3,42 @@ const mongoose = require('mongoose');
 const roadLineSchema = new mongoose.Schema(
   {
     id: {
-      type: Number, // "Id" from properties
+      type: Number,
       required: true,
-      default: 0,
+      default: 0, // corresponds to "properties.Id"
+    },
+    type: {
+      type: String,
+      enum: ['Feature'],
+      default: 'Feature',
     },
     geometry: {
       type: {
         type: String,
-        enum: ['MultiLineString'], // Only accept MultiLineString
+        enum: ['MultiLineString'],
         required: true,
       },
       coordinates: {
-        type: [[[Number]]], // Array of arrays of arrays of numbers -> [ [ [x, y], [x, y] ] ]
+        type: [[[Number]]], // Array of arrays of arrays of numbers → [[[x, y], [x, y], ...]]
         required: true,
       },
     },
     crs: {
       type: String,
-      default: 'EPSG:32643', // UTM Zone 43N by default
+      default: 'EPSG:32643', // UTM Zone 43N
+    },
+    properties: {
+      Id: {
+        type: Number,
+        required: true,
+      },
     },
   },
   { timestamps: true }
 );
 
-roadLineSchema.index({ geometry: '2dsphere' }); // Enable spatial indexing for geospatial queries
+// ❌ DO NOT use 2dsphere index since UTM is not supported for it
+// roadLineSchema.index({ geometry: '2dsphere' });
 
 const RoadLine = mongoose.model('RoadLine', roadLineSchema);
-module.exports =RoadLine;
+module.exports = RoadLine;

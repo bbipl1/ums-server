@@ -5,17 +5,35 @@ dotenv.config();
 const connectDB = require("./src/config/db.config");
 const app = express();
 const PORT = process.env.PORT;
+const log=require("./src/utils/logger")
+// log()
+// const getCurrentDateTime=require("./src/config/date.time.config")
+// console.log(getCurrentDateTime())
+
 // route import start
 const point=require('./src/routes/admin/map/point')
 const roadLine=require('./src/routes/admin/map/roadLines')
-const polygon=require('./src/routes/admin/map/polygon')
+const polygon=require('./src/routes/admin/map/polygon');
+const useAuthMiddleware = require("./src/middleware/auth/userAuth");
+const userAuth=require("./src/routes/auth/user.auth");
+const useLoginRateLimiter = require("./src/middleware/auth/useLoginRateLimiter");
+
 // route import end
 
 // middleware start
 // default middleware start
 app.use(cors());
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true }));
 // default middleware end
-app.use('/api/v1/admin/map/point',point);
+// customMiddleWare start
+app.use('/api/v1/viewer',useAuthMiddleware)
+// app.use('/api/v1/admin',useAuthMiddleware)
+// customMiddleware end
+// auth start here
+app.use('/api/v1/auth',useLoginRateLimiter,userAuth)
+// auth start end
+app.use('/api/v1/admin/map/point',useLoginRateLimiter,point);
 app.use('/api/v1/admin/map/road-line',roadLine);
 app.use('/api/v1/admin/map/polygon',polygon);
 // middleware end
@@ -30,6 +48,8 @@ const startApp = async() => {
     app.listen(PORT, () => {
       console.log("Server is running on port: ", PORT);
     });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 startApp();
