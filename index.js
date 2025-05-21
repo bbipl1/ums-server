@@ -6,7 +6,7 @@ const connectDB = require("./src/config/db.config");
 const app = express();
 const PORT = process.env.PORT;
 const log=require("./src/utils/logger")
-// log()
+
 // const getCurrentDateTime=require("./src/config/date.time.config")
 // console.log(getCurrentDateTime())
 
@@ -14,6 +14,8 @@ const log=require("./src/utils/logger")
 const point=require('./src/routes/admin/map/point')
 const roadLine=require('./src/routes/admin/map/roadLines')
 const polygon=require('./src/routes/admin/map/polygon');
+const manage_data=require('./src/routes/admin/data/data_routes');
+
 const useAuthMiddleware = require("./src/middleware/auth/userAuth");
 const userAuth=require("./src/routes/auth/user.auth");
 const useLoginRateLimiter = require("./src/middleware/auth/useLoginRateLimiter");
@@ -33,9 +35,11 @@ app.use('/api/v1/viewer',useAuthMiddleware)
 // auth start here
 app.use('/api/v1/auth',useLoginRateLimiter,userAuth)
 // auth start end
+
 app.use('/api/v1/admin/map/point',useLoginRateLimiter,point);
 app.use('/api/v1/admin/map/road-line',roadLine);
 app.use('/api/v1/admin/map/polygon',polygon);
+app.use('/api/v1/admin/data/manage_data',manage_data);
 // middleware end
 
 app.get('/', (req, res) => {

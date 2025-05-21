@@ -19,7 +19,7 @@ const poiSchema = new mongoose.Schema({
     country: String,
   },
 
-  // 🌍 WGS84 Location (lat/lng)
+  // 🌍 WGS84 Location (lng/lat)
   location: {
     type: {
       type: String,
