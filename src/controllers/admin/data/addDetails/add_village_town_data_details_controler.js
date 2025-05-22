@@ -6,27 +6,27 @@ const sendResponse = require("../../../../utils/sendResponse");
 
 const add_village_town_data_details_controller = async (req, res) => {
   try {
-    let { village_town_name,sub_district_id } = req.body;
+    let { village_town_name,gp_id } = req.body;
 
     let resData = null;
     village_town_name = village_town_name?.trim();
-    sub_district_id = sub_district_id?.toString()?.trim();
+    gp_id = gp_id?.toString()?.trim();
 
     if (!village_town_name) {
       resData = { status: "failed", err: "Village/town name is required." };
       return sendResponse(res, 400, resData);
     }
-    if(!village_town_name && !sub_district_id){
-      resData = { status: "failed", err: "Add sub-district first." };
+    if(!village_town_name && !gp_id){
+      resData = { status: "failed", err: "Add gram panchayat first." };
       return sendResponse(res, 400, resData);
     }
 
     const data_to_save = {
       name: village_town_name,
-      subDistrict: sub_district_id,
+      gp: gp_id,
     };
 
-    const alreadyExist=await Village_town_model.findOne({$and:[{name:village_town_name},{subDistrict:sub_district_id}]})
+    const alreadyExist=await Village_town_model.findOne({$and:[{name:village_town_name},{gp:gp_id}]})
     if(alreadyExist){
       resData = { status: "failed", err: "Village/town already exist." };
       return sendResponse(res, 409, resData);

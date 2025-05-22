@@ -55,12 +55,28 @@ const get_all_data_controller = async (req, res) => {
           preserveNullAndEmptyArrays: true, // <- keep even if no state
         },
       },
-      //get village-town
+
+      //get all-gp
       {
         $lookup: {
           localField: "sub_district._id",
-          from: "villagetowns",
+          from: "gps",
           foreignField: "subDistrict",
+          as: "gp",
+        },
+      },
+      {
+        $unwind: {
+          path: "$gp",
+          preserveNullAndEmptyArrays: true, // <- keep even if no state
+        },
+      },
+      //get village-town
+      {
+        $lookup: {
+          localField: "gp._id",
+          from: "villagetowns",
+          foreignField: "gp",
           as: "village_town",
         },
       },
@@ -78,6 +94,7 @@ const get_all_data_controller = async (req, res) => {
           district: 1,
           'sub_district':1,
           'village_town':1,
+          gp:1,
         },
       },
     ]);
@@ -94,9 +111,9 @@ const get_all_data_controller = async (req, res) => {
     log(error);
     const sendResData = {
       err: "Server internal error",
-      status: 500,
+      status: "failed",
     };
-    return sendResponse(sendResData);
+    return sendResponse(res,500,sendResData);
   }
 };
 
