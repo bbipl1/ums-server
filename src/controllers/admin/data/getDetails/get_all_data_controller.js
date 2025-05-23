@@ -99,7 +99,7 @@ const get_all_data_controller = async (req, res) => {
       },
     ]);
 
-    console.log(resData);
+    // console.log(resData);
     const data_to_send = {
       msg: "data received successfully",
       status: "success",

@@ -15,6 +15,7 @@ const point=require('./src/routes/admin/map/point')
 const roadLine=require('./src/routes/admin/map/roadLines')
 const polygon=require('./src/routes/admin/map/polygon');
 const manage_data=require('./src/routes/admin/data/data_routes');
+const feature_collections_data=require("./src/routes/admin/featureCollectionsData/feature_collection_routes");
 
 const useAuthMiddleware = require("./src/middleware/auth/userAuth");
 const userAuth=require("./src/routes/auth/user.auth");
@@ -40,6 +41,7 @@ app.use('/api/v1/admin/map/point',useLoginRateLimiter,point);
 app.use('/api/v1/admin/map/road-line',roadLine);
 app.use('/api/v1/admin/map/polygon',polygon);
 app.use('/api/v1/admin/data/manage_data',manage_data);
+app.use('/api/v1/admin/feature_collections_data/',feature_collections_data);
 // middleware end
 
 app.get('/', (req, res) => {
