@@ -10,7 +10,7 @@ const geoJSONSchema = new mongoose.Schema({
   geometry: {
     type: {
       type: String,
-      enum: ["Point", "LineString", "Polygon"],
+      enum: ["Point", "LineString", "Polygon","MultiPolygon"],
       required: true
     },
     coordinates: {
@@ -21,7 +21,7 @@ const geoJSONSchema = new mongoose.Schema({
   properties: {
     id: { type: String },
     name: { type: String },
-    featureType: { type: String, enum: ["Point", "LineString", "Polygon"] },
+    featureType: { type: String, enum: ["Point", "LineString", "Polygon","MultiPolygon"] },
     description: { type: String },
     category: { type: String },
 
